@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="white-box p-4 mb-4">
+    <h2 class="dashboard-title mb-0">Your Financial News Dashboard</h2>
+</div>
+
+{% if interests %}
+<div class="white-box p-4 mb-4">
+    <h5 class="mb-3">Your Interests:</h5>
+    <div class="d-flex flex-wrap">
+        {% for interest in interests %}
+        <span class="badge bg-primary me-2 mb-2">{{ interest }}</span>
+        {% endfor %}
+    </div>
+    
+    <div class="mt-4 mb-2">
+        <form method="get" action="{{ url_for('dashboard') }}" class="d-flex align-items-center flex-wrap">
+            <label class="me-2 mb-2">Show news from:</label>
+            <select name="days_back" class="form-select me-2 mb-2" style="width: auto;">
+                <option value="1" {% if days_back == 1 %}selected{% endif %}>Past 24 hours</option>
+                <option value="7" {% if days_back == 7 or not days_back %}selected{% endif %}>Past week</option>
+                <option value="14" {% if days_back == 14 %}selected{% endif %}>Past 2 weeks</option>
+                <option value="30" {% if days_back == 30 %}selected{% endif %}>Past month</option>
+            </select>
+            <button type="submit" class="btn btn-sm btn-outline-primary mb-2">Apply</button>
+            
+            <a href="{{ url_for('preferences') }}" class="btn btn-sm btn-outline-primary ms-auto mb-2">Edit Interests</a>
+        </form>
+    </div>
+</div>
+{% endif %}
+
+{% if news %}
+<div class="row" id="news-container">
+    {% for article in news %}
+    <div class="col-md-6 mb-4">
+        <div class="card h-100 solid-white">
+            {% if article.image_url %}
+            <img src="{{ article.image_url }}" class="card-img-top" alt="{{ article.title }}" style="height: 200px; object-fit: cover;">
+            {% else %}
+            <div class="bg-light text-center py-5">
+                <p class="text-muted">No image available</p>
+            </div>
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title">{{ article.title }}</h5>
+                <p class="card-text small text-muted">Published by: {{ article.publisher }} - {{ article.published_at }}</p>
+                
+                <!-- Sentiment Badge -->
+                {% if article.sentiment.label == 'Positive' %}
+                <span class="badge bg-success">{{ article.sentiment.label }} ({{ "%.2f"|format(article.sentiment.score) }})</span>
+                {% elif article.sentiment.label == 'Negative' %}
+                <span class="badge bg-danger">{{ article.sentiment.label }} ({{ "%.2f"|format(article.sentiment.score) }})</span>
+                {% else %}
+                <span class="badge bg-secondary">{{ article.sentiment.label }} ({{ "%.2f"|format(article.sentiment.score) }})</span>
+                {% endif %}
+                
+                <!-- Summary -->
+                <p class="card-text mt-3">
+                    <strong>Summary:</strong> {{ article.summary }}
+                </p>
+                
+                <a href="{{ article.url }}" class="btn btn-outline-primary btn-sm" target="_blank">Read Full Article</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- Load More Button -->
+{% if has_more %}
+<div class="text-center my-4">
+    <a href="{{ url_for('dashboard', page=page+1, days_back=days_back) }}" class="btn btn-primary load-more-btn">
+        Load More Articles
+    </a>
+</div>
+{% endif %}
+
+{% else %}
+<div class="white-box p-4">
+    <div class="alert alert-info mb-0">
+        {% if interests %}
+        <p>No news articles found for your interests. Try adding more stock symbols or checking back later.</p>
+        {% else %}
+        <p>Please set your financial interests to see personalized news.</p>
+        <a href="{{ url_for('preferences') }}" class="btn btn-primary">Set Interests</a>
+        {% endif %}
+    </div>
+</div>
+{% endif %}
+
+<style>
+/* Add these styles for consistent display */
+.white-box {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.solid-white {
+    background-color: #fff !important;
+    border: none !important;
+}
+
+.dashboard-title {
+    font-weight: 600;
+    color: #333;
+}
+
+/* Fix badge styling in dark mode if applicable */
+.badge.bg-primary {
+    font-weight: 500;
+    padding: 6px 10px;
+}
+
+/* Make sure form elements align properly on mobile */
+@media (max-width: 768px) {
+    .d-flex.align-items-center {
+        width: 100%;
+    }
+}
+</style>
+{% endblock %}

@@ -1,0 +1,27 @@
+<!-- templates/preferences.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h4>Financial Interests</h4>
+            </div>
+            <div class="card-body">
+                <p>Specify your financial interests to personalize your news feed. Enter stock symbols separated by commas (e.g., AAPL, MSFT, AMZN).</p>
+                <form method="post" action="{{ url_for('preferences') }}">
+                    <div class="mb-3">
+                        <label for="interests" class="form-label">Stock Symbols / Keywords</label>
+                        <input type="text" class="form-control" id="interests" name="interests" 
+                               value="{{ ','.join(interests) if interests else '' }}" 
+                               placeholder="AAPL, MSFT, AMZN, crypto">
+                        <div class="form-text">Enter stock tickers, ETFs, or market segments you're interested in.</div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save Preferences</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

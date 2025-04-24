@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="landing-container">
+    <div class="landing-header text-center mb-5">
+        <div class="white-box p-4 d-block">
+            <h1 class="display-4 mb-3">Financial News Sentiment Dashboard</h1><br>
+            <p class="lead mb-0">Your personalized financial insights, curated in seconds</p>
+        </div>
+    </div>
+    
+    <div class="row quote-section my-5">
+        <div class="col-md-8 offset-md-2">
+            <div class="white-box p-4">
+                <blockquote class="blockquote text-center mb-0">
+                    <p>"If I had six hours to chop down a tree, I would spend the first four hours sharpening the axe."</p>
+                    <footer class="blockquote-footer">Abraham Lincoln</footer>
+                </blockquote>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row features my-5">
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 solid-white">
+                <div class="card-body text-center">
+                    <i class="fas fa-clock fa-3x mb-3 text-primary"></i>
+                    <h3 class="card-title">Save Valuable Time</h3>
+                    <p class="card-text">"Better three hours too soon than a minute too late."</p>
+                    <p>Our dashboard brings you only the financial news that matters to you.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 solid-white">
+                <div class="card-body text-center">
+                    <i class="fas fa-chart-line fa-3x mb-3 text-primary"></i>
+                    <h3 class="card-title">Personalized For You</h3>
+                    <p class="card-text">"Your time is limited, so don't waste it living someone else's life."</p>
+                    <p>Specify your financial interests and get news that matters to your portfolio.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 solid-white">
+                <div class="card-body text-center">
+                    <i class="fas fa-brain fa-3x mb-3 text-primary"></i>
+                    <h3 class="card-title">Sentiment Analysis</h3>
+                    <p class="card-text">"Our greatest currency is our time and we cannot save it. Spend it wisely."</p>
+                    <p>Instantly understand market sentiment with our AI-powered analysis.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row cta-section my-5">
+        <div class="col-md-8 offset-md-2">
+            <div class="white-box p-4 text-center">
+                <h2>Start Your Personalized Financial News Journey Today</h2>
+                <p class="lead">Join our platform to save time and make informed financial decisions.</p>
+                <div class="mt-4">
+                    <a href="{{ url_for('register') }}" class="btn btn-primary btn-lg mx-2 mb-2">Sign Up</a>
+                    <a href="{{ url_for('login') }}" class="btn btn-outline-primary btn-lg mx-2 mb-2">Log In</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row attribution-section mt-5">
+        <div class="col-md-8 offset-md-2">
+            <div class="white-box p-4 text-center">
+                <h4>Made By:</h4>
+                <p class="mb-0">
+                    Syed Mohammad Ayan Abbas (RA2211003010758)<br>
+                    Amritanshu Shivanshi (RA2211003010856)<br>
+                    Utkrisht Jalan (RA2211003010758)
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+/* Inline styles to ensure consistent display */
+.white-box {
+    background-color: #fff; /* Fully opaque white */
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.solid-white {
+    background-color: #fff !important; /* Fully opaque white */
+    border: none !important;
+}
+
+/* Center login vertically when on login page */
+.login-container {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+}
+</style>
+{% endblock %}
